@@ -45,6 +45,9 @@ composer.jsonに以下を追記
 				"reference":"master"
 			}
 		}
+		"require":{
+			"tecnick.com/tcpdf": ">=6.0"
+		}
 	}
 
 インストール
@@ -111,8 +114,8 @@ composer.jsonに以下を追記
 	// ページ設定と新規作成
 	$pdf->apply(array(
 		// 指定した引数がconfigの値より優先される
-		'AddPage'          => array( 'orientation' => 'P', 'format'=> 'A4' ),
-		'SetMargins'       => array( 'left'=> 10, 'top' => 10, 'right' => 10 ),
+		'AddPage'		  => array( 'orientation' => 'P', 'format'=> 'A4' ),
+		'SetMargins'	   => array( 'left'=> 10, 'top' => 10, 'right' => 10 ),
 		
 		// 引数なしで呼び出すとデフォルト値で実行される
 		'setPrintHeader'   => array(),
@@ -127,13 +130,13 @@ composer.jsonに以下を追記
 	
 	// 植字
 	$pdf->apply(array(
-		'SetXY'       => array( 'x' => 60.0, 'y' => 30.0 ),
+		'SetXY'	   => array( 'x' => 60.0, 'y' => 30.0 ),
 		'SetFontSize' => array( 'size' => 30 ),
-		'Write'       => array( 'txt' => 'That\'s very Hogehuga.' ),
+		'Write'	   => array( 'txt' => 'That\'s very Hogehuga.' ),
 	));
 	$pdf->apply(array(
-		'SetXY'       => array( 'x' => 150.0, 'y' => 170.0 ),
-		'Write'       => array( 'txt' => 'public domain' ),
+		'SetXY'	   => array( 'x' => 150.0, 'y' => 170.0 ),
+		'Write'	   => array( 'txt' => 'public domain' ),
 	));
 	
 	// 図形描画
@@ -189,15 +192,15 @@ composer.jsonに以下を追記
 					'__args' => array(
 						'AddPage' => array(
 							'orientation' => 'L',
-							'format'      => 'A1',
+							'format'	  => 'A1',
 						),
 						'Output' => array(
 							'name' => 'welcome_to_the_world.pdf',
 						),
 						'SetFont' => array(
 							'family'   => 'kozgopromedium',
-							'style'    => '',
-							'size'     => 11,
+							'style'	=> '',
+							'size'	 => 11,
 						),
 						'SetFontSize' => array(
 							'size' => 11,
