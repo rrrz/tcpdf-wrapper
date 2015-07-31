@@ -76,7 +76,7 @@ composer.jsonに以下を追記
 	{
 		public function before(){}
 	
-		public function action_test()
+		public function action_welcome()
 		{
 			// TCPDF-Wrapperオブジェクトの生成
 			// ※ クラス名は "Pdf" となります。

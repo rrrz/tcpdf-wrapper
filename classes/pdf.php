@@ -1,7 +1,7 @@
 <?php
 namespace Tcpdf_Wrapper;
 
-require_once(APPPATH.'vendor/tcpdf/tcpdf.php');
+require_once(VENDORPATH.'tecnick.com/tcpdf/tcpdf.php');
 
 /**
  * PDF生成クラス
