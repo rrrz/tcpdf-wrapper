@@ -1,0 +1,15 @@
+{
+	"name": "rrrz/tcpdf-wrapper",
+	"description" : "FuelPHP TCPDF Wrapper - Wrap and adapt TCPDF class for MVC model.",
+	"type": "fuel-package",
+	"homepage": "https://github.com/rrrz/tcpdf-wrapper",
+	"authors": [
+		{
+			"name": "Takeshige Nii",
+			"email": "rznii@rrr-z.co.jp"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}
