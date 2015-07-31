@@ -4,9 +4,10 @@ require_once(PKGPATH.'tcpdf-wrapper/tests/classes/share_funcs.php');
 /**
  * test class Pdf_Wrapper
  * 
- * @group App
- * @group AppClasses
- * @group AppClassesPdf
+ * @group Package
+ * @group PackageTcpdfwrapper
+ * @group PackageTcpdfwrapperClasses
+ * @group PackageTcpdfwrapperClassesPdf
  */
 class Test_Pdf_Wrapper extends \TestCase
 {

@@ -10,10 +10,11 @@ require_once(PKGPATH.'tcpdf-wrapper/tests/classes/share_funcs.php');
  *  
  * テストケース中で用いる引数は、デフォルト値との区別をつけるため全てデフォルトとは異なる値を用いることとします。
  * 
- * @group App
- * @group AppClasses
- * @group AppClassesPdf
- * @group AppClassesPdfWrapper
+ * @group Package
+ * @group PackageTcpdfwrapper
+ * @group PackageTcpdfwrapperClasses
+ * @group PackageTcpdfwrapperClassesPdf
+ * @group PackageTcpdfwrapperClassesPdfWrapper
  */
 class Test_Pdf_Wrapper_Positioning extends \TestCase
 {
