@@ -20,12 +20,53 @@ TCPDFの機能をラップし、以下の機能を提供します。
 
 ## Install
 
-* git clone https://github.com/rrrz/tcpdf-wrapper fuel/packages/tcpdf-wrapper
-* vi fuel/app/config.php
+(1) パッケージのインストール
 
-		always_load => 
+■ gitリポジトリよりクローンする場合
+
+	git clone https://github.com/rrrz/tcpdf-wrapper fuel/packages/tcpdf-wrapper
+	
+■ composerによりインストールする場合
+
+composer.jsonに以下を追記
+
+	"require": {
+		"tcpdf-wrapper": "1.*"
+	},
+	{
+		"type":"package",
+		"package":{
+			"name":"tcpdf-wrapper",
+			"type":"fuel-package",
+			"version":"1.0",
+			"source":{
+				"type":"git",
+				"url":"https://github.com/rrrz/tcpdf-wrapper.git",
+				"reference":"master"
+			}
+		}
+	}
+
+インストール
+
+	composer.phar install
+	composer.phar update
+
+(2) configの設定
+
+	vi fuel/app/config.php
+
+		// オートローダに登録
+		always_load => array(
 			packages => 'tcpdf-wrapper',
-
+		),
+		
+		// サニタイズ対象から除外
+		'security' => array(
+			'whitelisted_classes' => array(
+				'Pdf',
+			),
+		),
 
 ## Usage
 
