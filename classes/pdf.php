@@ -51,6 +51,11 @@ class Pdf
 	protected $pdf_source = null;
 	
 	/**
+	 * 現在呼び出しているviewのパス
+	 */
+	protected $current_path = array();
+	
+	/**
 	 * 呼び出し先viewのパスを管理するスタック
 	 */
 	protected $call_stack = array();
@@ -106,20 +111,38 @@ class Pdf
 	/**
 	 * viewに記述されたレイアウトメソッドの実行
 	 * 
-	 * @param string $view_path viewファイルへのパス
+	 * @param string $view_path スラッシュまたはドット区切りのviewファイルへのパス(例： 'views/pdf/welcome', 'views.pdf.welcome')
 	 * @param array  $data      viewファイルに渡すデータを格納した配列
+	 * @return bool             viewファイルへのパスが渡されなかった場合にはfalse
 	 */
 	public function render($view_path = '', $data = array())
 	{
 		if (!$view_path){ return false; }
 		
-		array_push($this->call_stack, $view_path);
+		// 呼び出し元のパスとデフォルトメソッドをスタックに退避
+		array_push($this->call_stack, array('path' => $this->current_path, 'default_exec' => $this->default_exec));
 		
+		// 読み込むviewのパスを正規化して保存
+		$view_path = str_replace('.', '/', $view_path);
+		
+		$this->current_path = $view_path;
+		
+		// 読み込むviewのconfigをロード
 		$this->load_config($view_path);
 		
+		// viewのレンダ
 		render($view_path, $data);
 		
-		array_pop($this->call_stack);
+		// 呼び出し元viewのデータ復元
+		$caller = array_pop($this->call_stack);
+		
+		$this->current_path = $caller['path'];
+		$this->default_exec = $caller['default_exec'];
+		
+		// 呼び出し元viewのconfigをロード
+		$this->load_config($this->current_path);
+		
+		return true;
 	}
 	
 	/**
@@ -129,14 +152,18 @@ class Pdf
 	 */
 	public function apply($args = array())
 	{
+		// オフセットの適用
 		$args = $this->offset($args);
 		
+		// デフォルト実行メソッドの呼び出し
 		foreach ($this->default_exec as $method_name => $method_args){
 			$this->$method_name($method_args);
 		}
 		
+		// 被ラップメソッドの実行順序を調整
 		$ordered_methods = $this->get_orderd_methods(array_keys($args));
 		
+		// 被ラップメソッドの実行
 		foreach ($ordered_methods as $method_name){
 			$this->$method_name(array($method_name => $args[$method_name]));
 		}
@@ -163,15 +190,18 @@ class Pdf
 	protected function load_config($view_path = '')
 	{
 		$config_default = \Arr::get($this->config, 'master.default');
-	
+		
 		if ($view_path){
-	
+			
+			// viewファイルの個別設定を読み込み
 			$this->config['current'] = $this->get_resolved_params($view_path);
 	
 		} else {
-	
+			
+			// configのデフォルト値を読み込み
 			$this->config['current'] = $config_default;
-	
+			
+			// 全体オフセット量をデフォルト値で初期化
 			$this->config['global_offset'] = \Arr::get($this->config, 'master.global_offset');
 		}
 	}
@@ -188,6 +218,7 @@ class Pdf
 	
 		$params = array();
 	
+		// viewファイルごとのconfigを深層から上に向かって繰り返しマージ
 		while (!empty($path_elems)){
 	
 			$path = implode('.', $path_elems);
@@ -198,7 +229,8 @@ class Pdf
 	
 			array_pop($path_elems);
 		}
-
+		
+		// デフォルト値とのマージにより定義されていない個別設定値を補完
 		$params_mergee = $this->get_exact_params('master.default');
 	
 		$params = \Arr::merge($params_mergee, $params);

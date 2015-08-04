@@ -20,7 +20,7 @@ return array(
 				'unit'        => 'mm',
 				'format'      => 'A4',
 				'unicode'     => true,
-				'encoding'    => 'utf-8',
+				'encoding'    => 'UTF-8',
 			),
 			
 			'AddPage' => array(
@@ -30,8 +30,8 @@ return array(
 				'tocpage'     => false ,
 			),
 			'Cell' => array(
-				'w'                 => 10,
-				'h'                 => 10,
+				'w'                 => 0,
+				'h'                 => 0,
 				'txt'               => '',
 				'border'            => 0,
 				'ln'                => 0,

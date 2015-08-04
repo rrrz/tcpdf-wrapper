@@ -41,6 +41,7 @@ trait Pdf_Wrapper
 	 */
 	protected function get_orderd_methods($unorderd_methods = array())
 	{
+		// AND演算後も第一引数に渡された配列の順序は保存される
 		return array_intersect($this->call_priority, $unorderd_methods);
 	}
 }
